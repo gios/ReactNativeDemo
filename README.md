@@ -1,2 +1,2 @@
-# FuelForce
-React Native fuel controller
+# React Native Demo
+React Native Demo App
