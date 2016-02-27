@@ -1,2 +1,2 @@
-# purchase-todo
+# Shophub
 React Native parchase application
