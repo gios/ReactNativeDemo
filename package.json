@@ -7,5 +7,10 @@
   },
   "dependencies": {
     "react-native": "^0.20.0"
+  },
+  "devDependencies": {
+    "eslint": "^2.2.0",
+    "eslint-plugin-react": "^4.1.0",
+    "typescript": "^1.8.2"
   }
 }
