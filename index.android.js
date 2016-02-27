@@ -12,14 +12,6 @@ import React, {
   View
 } from 'react-native'
 
-var MOCKED_MOVIES_DATA = [
-  {
-    title: 'Title',
-    year: '2015',
-    posters: {thumbnail: 'http://i.imgur.com/UePbdph.jpg'}
-  }
-]
-
 var REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json'
 
 class shophub extends Component {
@@ -42,11 +34,29 @@ class shophub extends Component {
           movies: responseData.movies
         })
       })
-      .done();
+      .done()
   }
 
   render() {
-    var movie = MOCKED_MOVIES_DATA[0]
+    if (!this.state.movies) {
+      return this.renderLoadingView()
+    }
+
+    var movie = this.state.movies[0]
+    return this.renderMovie(movie)
+  }
+
+  renderLoadingView() {
+    return (
+      <View style={styles.container}>
+        <Text>
+          Loading movies...
+        </Text>
+      </View>
+    )
+  }
+
+  renderMovie(movie) {
     return (
       <View style={styles.container}>
         <Image
