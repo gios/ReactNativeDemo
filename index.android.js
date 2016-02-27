@@ -7,18 +7,26 @@ import React, {
   AppRegistry,
   Component,
   Image,
+  ListView,
   StyleSheet,
   Text,
   View
 } from 'react-native'
 
-var REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json'
+var API_KEY = '7waqfqbprs7pajbz28mqf6vz'
+var API_URL = 'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json'
+var PAGE_SIZE = 50
+var PARAMS = '?apikey=' + API_KEY + '&page_limit=' + PAGE_SIZE
+var REQUEST_URL = API_URL + PARAMS
 
 class shophub extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      movies: null
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2
+      }),
+      loaded: false
     }
   }
 
@@ -31,19 +39,25 @@ class shophub extends Component {
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({
-          movies: responseData.movies
+          dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
+          loaded: true
         })
       })
       .done()
   }
 
   render() {
-    if (!this.state.movies) {
+    if (!this.state.loaded) {
       return this.renderLoadingView()
     }
 
-    var movie = this.state.movies[0]
-    return this.renderMovie(movie)
+    return (
+      <ListView
+        dataSource={this.state.dataSource}
+        renderRow={this.renderMovie}
+        style={styles.listView}
+      />
+    )
   }
 
   renderLoadingView() {
@@ -94,6 +108,10 @@ const styles = StyleSheet.create({
   },
   year: {
     textAlign: 'center'
+  },
+  listView: {
+    paddingTop: 20,
+    backgroundColor: '#F5FCFF'
   }
 })
 
