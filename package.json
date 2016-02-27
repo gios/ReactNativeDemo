@@ -11,6 +11,7 @@
   "devDependencies": {
     "eslint": "^2.2.0",
     "eslint-plugin-react": "^4.1.0",
+    "eslint-plugin-react-native": "^1.0.0",
     "typescript": "^1.8.2"
   }
 }
